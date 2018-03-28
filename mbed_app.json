@@ -1,16 +1,18 @@
 {
+    "macros": ["DEFAULT_APN=\"m2m.com.attz\""
+              ],
     "config": {
-       "mqtt-interface":{
-           "help": "Options are MQTT_ETHERNET, MQTT_WNC14A2A, MQTT_BG96",
-           "value": "MQTT_WNC14A2A"
+       "network-interface":{
+           "help": "CELLULAR_BG96",
+           "value": "CELLULAR_BG96"
        },
-       "wnc_debug": {
+       "bg96_debug": {
            "help" : "enable or disable WNC debug messages.",
            "value": 0
        },
-       "wnc_debug_setting": {
+       "bg96-debug-setting": {
            "help" : "bit value 1 and/or 2 enable WncController debug output, bit value 4 enables mbed driver debug output.",
-           "value": "0xc"
+           "value": "0x84"
        }
     },
     "target_overrides": {
@@ -20,4 +22,5 @@
         }
     }
 }
+
 
