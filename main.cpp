@@ -1,3 +1,31 @@
+/**
+* copyright (c) 2018, James Flynn
+* SPDX-License-Identifier: Apache-2.0
+*/
+
+/* =====================================================================
+   Copyright © 2018, Avnet (R)
+
+   Contributors:
+     * James M Flynn, www.em.avnet.com 
+ 
+   Licensed under the Apache License, Version 2.0 (the "License"); 
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, 
+   software distributed under the License is distributed on an 
+   "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+   either express or implied. See the License for the specific 
+   language governing permissions and limitations under the License.
+
+    @file          main.cpp
+    @version       1.0
+    @date          April 1, 2018
+
+======================================================================== */
 
 #include <cctype>
 #include <string>
@@ -27,15 +55,14 @@ static XNucleoIKS01A2 *mems_expansion_board = XNucleoIKS01A2::instance(D14, D15,
 
 /* initialize the expansion board sensors */
 static HTS221Sensor  *hum_temp   = mems_expansion_board->ht_sensor;
-static LPS22HBSensor *press_temp = mems_expansion_board->pt_sensor;
 
 int main() {
-    const char* topic = PUBLISH_TOPIC;
+    const char* topic    = PUBLISH_TOPIC;
     const char* hostname = URL;
     char        clientID[100], buf[100];
     string      st, uniqueID;
-    int         loopCnt, rc, good = 0, port=PORT;
-    float       temp, temp1, temp2, hum;
+    int         loopCnt, rc, good=0, port=PORT;
+    float       temp, hum;
 
     printf("\r\n");
     printf("     ****\r\n");
@@ -64,12 +91,12 @@ int main() {
     uniqueID += st[7];
     uniqueID += st[9];
     uniqueID += st[10];
-    uniqueID += "-2016";
+    uniqueID += "-2018";
     
     sprintf(clientID, CONFIGTYPE, uniqueID.c_str());
 
     printf("------------------------------------------------------------------------\r\n");
-    printf("Local network info:\r\n");    
+    printf("Network info:\r\n");    
     printf("IP address:         %s\r\n", eth.get_ip_address());
     printf("MAC address:        %s\r\n", eth.get_mac_address());
     printf("Your <uniqueID> is: %s\r\n", uniqueID.c_str());
@@ -81,8 +108,8 @@ int main() {
     MQTTPacket_connectData data = MQTTPacket_connectData_initializer;       
 
     while( !good ) {
-        loopCnt=0;
         rc = 1;
+        loopCnt=0;
         while( rc && loopCnt < 3) {   // connect to TCP socket and check return code
             printf("\r\n\r\n(%d) Attempting TCP connect to %s:%d:  ", loopCnt++, hostname, port);
             rc = net.connect((char*)hostname, port);
@@ -95,8 +122,11 @@ int main() {
                 rc = 0;
                 }
             }
-        if( loopCnt < 3 )
-            loopCnt = 0;
+
+        if( loopCnt == 3 ) {
+            printf("Failed to connect to '%s'\n",hostname);
+            abort();
+            }
         
         data.willFlag         = 0;  
         data.MQTTVersion      = 3;
@@ -104,7 +134,8 @@ int main() {
         data.keepAliveInterval= 10;
         data.cleansession     = 1;
     
-        rc = 1;
+        rc      = 1;
+        loopCnt = 0;
         while( !client.isConnected() && rc && loopCnt < 3) {
             printf("(%d) Attempting MQTT connect to %s:%d: ", loopCnt++, hostname, port);
             rc = client.connect(data);
@@ -113,11 +144,14 @@ int main() {
                 wait(5);
                 }
             else
-                printf("Success!\r\n");
+                printf("Success!\n\n");
             }
 
-        if( loopCnt < 3 )
-            loopCnt = 0;
+        if( loopCnt == 3 ) {
+            printf("Failed to connect to MQTT service\n");
+            abort();
+            }
+
         good = 1;
         }
     
@@ -128,15 +162,12 @@ int main() {
     message.payload  = (void*)buf;
     
     hum_temp->enable();
-    press_temp->enable();
+
     loopCnt=0;
 
     while(true) {
-	hum_temp->get_temperature(&temp1);
+ 	      hum_temp->get_temperature(&temp);
         hum_temp->get_humidity(&hum);
-   
-        press_temp->get_temperature(&temp2);
-        temp = (temp1+temp2)/2;
 
         printf("Loop #%d\n", ++loopCnt);
         memset(buf,0x00,sizeof(buf));
