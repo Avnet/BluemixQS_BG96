@@ -46,7 +46,7 @@ instructions for both method are below.
 
 You can verify operation of the Bluemix Quick Start application via a connected terminal program (Putty, minicom, hyperterm, coolterm or some other similar program).  The connection parameters are 115200-N81. The program execution should resemble:
 
-<code>
+```
      ****
     **  **     Bluemix Quick Start example, version 1.0
    **    **    Demo of the RSR1157 NbIOT BG96 expansion board
@@ -81,7 +81,7 @@ Loop #3
 Publishing MQTT message '{"d" : {"humd" : "47.0" }}'
 Publishing MQTT message '{"d" : {"temp" : " 55.8" }}'
 
-</code>
+```
 
 **NOTE: elements such as IP, MAC, and UniqueID will be different from that shown above.
 
