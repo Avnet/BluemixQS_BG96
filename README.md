@@ -23,7 +23,7 @@ instructions for both method are below.
 
 2. Goto the BluemixQS_BG96 folder, Then edit mbed_settings.py and add the path to your compiler using GCC_ARM_PATH
  
-3. Build the program by executing the command **'mbed compile -m K64F -t GCC_ARM'**
+3. Build the program by executing the command **'mbed compile -t GCC_ARM -m NUCLEO_L476RG'**
 
 4. The executable program will be located at **BUILD/NUCLEO_L476RG/GCC_ARM/BluemixQS_BG96.bin**
 
