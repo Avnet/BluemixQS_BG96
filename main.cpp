@@ -134,7 +134,9 @@ int main() {
         data.keepAliveInterval= 10;
         data.cleansession     = 1;
     
+
         rc = 1;
+
         loopCnt = 0;
         while( !client.isConnected() && rc && loopCnt < 3) {
             printf("(%d) Attempting MQTT connect to %s:%d: ", loopCnt++, hostname, port);
@@ -145,12 +147,14 @@ int main() {
                 }
             else
                 printf("Success!\n\n");
+
             }
         if( loopCnt == 3 ) {
             printf("Failed to connect to MQTT service\n");
             abort();
             }
         
+
         good = 1;
         }
     
@@ -161,12 +165,13 @@ int main() {
     message.payload  = (void*)buf;
     
     hum_temp->enable();
+
     loopCnt=0;
 
     while(true) {
-	hum_temp->get_temperature(&temp);
+ 	      hum_temp->get_temperature(&temp);
         hum_temp->get_humidity(&hum);
-   
+
 
         printf("Loop #%d\n", ++loopCnt);
         memset(buf,0x00,sizeof(buf));
