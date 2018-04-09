@@ -96,10 +96,11 @@ int main() {
     sprintf(clientID, CONFIGTYPE, uniqueID.c_str());
 
     printf("------------------------------------------------------------------------\r\n");
-    printf("Network info:\r\n");    
-    printf("IP address:         %s\r\n", eth.get_ip_address());
-    printf("MAC address:        %s\r\n", eth.get_mac_address());
-    printf("Your <uniqueID> is: %s\r\n", uniqueID.c_str());
+    printf("Firmware Revision:   %s\r\n\r\n",FIRMWARE_REV(&eth));
+    printf("Network info:\r\n");
+    printf("  IP address:        %s\r\n", eth.get_ip_address());
+    printf("  MAC address:       %s\r\n", eth.get_mac_address());
+    printf("Your <uniqueID> is:  %s\r\n", uniqueID.c_str());
     printf("\r\nTo observe, go to 'https://quickstart.internetofthings.ibmcloud.com/'\r\n");
     printf("and enter '%s' as your device ID.  Data will then be displayed\r\n",uniqueID.c_str());
     printf("as it is received. \r\n");
