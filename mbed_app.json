@@ -2,6 +2,12 @@
     "macros": ["DEFAULT_APN=\"m2m.com.attz\""
               ],
     "config": {
+       "main-stack-size":{
+           "value": 6144
+       },
+       "thread-stack-size":{
+           "value": 6144
+       },
        "network-interface":{
            "help": "CELLULAR_BG96",
            "value": "CELLULAR_BG96"
