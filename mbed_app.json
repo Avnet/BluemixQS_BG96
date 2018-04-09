@@ -9,7 +9,7 @@
            "value": 6144
        },
        "network-interface":{
-           "help": "CELLULAR_BG96",
+           "help": There are a number of interfces to use, Avnet supports CELLULAR_BG96 and CELLULAR_WNC14A2A",
            "value": "CELLULAR_BG96"
        },
        "bg96_debug": {
