@@ -14,7 +14,7 @@
        },
        "bg96-debug": {
            "help" : "enable or disable WNC debug messages.",
-           "value": true
+           "value": false
        },
        "bg96-debug-setting": {
            "help" : "bit value 1 and/or 2 enable WncController debug output, bit value 4 enables mbed driver debug output.",

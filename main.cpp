@@ -78,7 +78,6 @@ int main() {
     MQTT_USE(BG96Interface);
     MQTTct   net;
     MQTTnet& eth = net.getEth();
-//((BG96Interface*)&eth)->doDebug(0x8c);
 
     MQTT::Client<MQTTct, Countdown> client = MQTT::Client<MQTTct, Countdown>(net);
     
