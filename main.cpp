@@ -48,7 +48,7 @@
 #define PUBLISH_TOPIC     "iot-2/evt/status/fmt/json"    // MQTT topic
 
 #define APP_VERSION       "1.0"
-#define CTOF(x)           ((x)*1.8+32)
+#define CTOF(x)           ((double)(x)*1.8+32)
 
 /* initialize the expansion board */
 static XNucleoIKS01A2 *mems_expansion_board = XNucleoIKS01A2::instance(D14, D15, D4, D5);
